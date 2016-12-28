@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.my.mapper.BookMapper">
+
+  <sql id="Base_Column_List">
+    ID, NAME, AUTHOR, PRICE, PUBLISHDATE, TYPE, ADDRESS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultType="java.util.HashMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEST_BOOK
+    where ID = #{ID,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+    delete from TEST_BOOK
+    where ID = #{ID,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.my.bean.Book">
+    insert into TEST_BOOK (ID, NAME, AUTHOR, 
+      PRICE, PUBLISHDATE, TYPE, 
+      ADDRESS)
+    values (#{ID,jdbcType=DECIMAL}, #{NAME,jdbcType=VARCHAR}, #{AUTHOR,jdbcType=VARCHAR}, 
+      #{PRICE,jdbcType=DECIMAL}, #{PUBLISHDATE,jdbcType=TIMESTAMP}, #{TYPE,jdbcType=DECIMAL}, 
+      #{ADDRESS,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.my.bean.Book">
+    insert into TEST_BOOK
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID != null">
+        ID,
+      </if>
+      <if test="NAME != null">
+        NAME,
+      </if>
+      <if test="AUTHOR != null">
+        AUTHOR,
+      </if>
+      <if test="PRICE != null">
+        PRICE,
+      </if>
+      <if test="PUBLISHDATE != null">
+        PUBLISHDATE,
+      </if>
+      <if test="TYPE != null">
+        TYPE,
+      </if>
+      <if test="ADDRESS != null">
+        ADDRESS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID != null">
+        #{ID,jdbcType=DECIMAL},
+      </if>
+      <if test="NAME != null">
+        #{NAME,jdbcType=VARCHAR},
+      </if>
+      <if test="AUTHOR != null">
+        #{AUTHOR,jdbcType=VARCHAR},
+      </if>
+      <if test="PRICE != null">
+        #{PRICE,jdbcType=DECIMAL},
+      </if>
+      <if test="PUBLISHDATE != null">
+        #{PUBLISHDATE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="TYPE != null">
+        #{TYPE,jdbcType=DECIMAL},
+      </if>
+      <if test="ADDRESS != null">
+        #{ADDRESS,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.my.bean.Book">
+    update TEST_BOOK
+    <set>
+      <if test="NAME != null">
+        NAME = #{NAME,jdbcType=VARCHAR},
+      </if>
+      <if test="AUTHOR != null">
+        AUTHOR = #{AUTHOR,jdbcType=VARCHAR},
+      </if>
+      <if test="PRICE != null">
+        PRICE = #{PRICE,jdbcType=DECIMAL},
+      </if>
+      <if test="PUBLISHDATE != null">
+        PUBLISHDATE = #{PUBLISHDATE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="TYPE != null">
+        TYPE = #{TYPE,jdbcType=DECIMAL},
+      </if>
+      <if test="ADDRESS != null">
+        ADDRESS = #{ADDRESS,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{ID,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.my.bean.Book">
+    update TEST_BOOK
+    set NAME = #{NAME,jdbcType=VARCHAR},
+      AUTHOR = #{AUTHOR,jdbcType=VARCHAR},
+      PRICE = #{PRICE,jdbcType=DECIMAL},
+      PUBLISHDATE = #{PUBLISHDATE,jdbcType=TIMESTAMP},
+      TYPE = #{TYPE,jdbcType=DECIMAL},
+      ADDRESS = #{ADDRESS,jdbcType=VARCHAR}
+    where ID = #{ID,jdbcType=DECIMAL}
+  </update>
+  <select id="queryAll" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+  	select * from (select t.*,rownum rn from test_book t) where rn>=#{start} and rn &lt;=#{end}
+  </select>
+    <select id="queryAll_count" resultType="int" parameterType="java.util.HashMap">
+  	select count(*) from (select t.*,rownum rn from test_book t)
+  </select>
+</mapper>

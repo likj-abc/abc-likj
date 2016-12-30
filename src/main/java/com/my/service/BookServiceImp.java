@@ -18,32 +18,33 @@ public class BookServiceImp implements BookService {
 	@Autowired
 	BookMapper bookMapper;
 	public int deleteByPrimaryKey(BigDecimal ID) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public int insert(Book record) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int insertSelective(Book record) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertSelective(Book record) throws Exception {
+		try {
+			int a = bookMapper.insertSelective(record);
+			return a;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("≤Â»Î–≈œ¢ ß∞‹£°");
+		}
+		
 	}
 
 	public Book selectByPrimaryKey(BigDecimal ID) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public int updateByPrimaryKeySelective(Book record) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public int updateByPrimaryKey(Book record) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -53,8 +54,36 @@ public class BookServiceImp implements BookService {
 	}
 
 	public int queryAll_count(HashMap<String, Object> wherMap) {
-		// TODO Auto-generated method stub
 		return bookMapper.queryAll_count(wherMap);
 	}
 
+	@Override
+	public List<HashMap<String, Object>> queryType(HashMap<String, Object> wherMap) {
+		List<HashMap<String,Object>> types = bookMapper.queryType(wherMap);
+		return types;
+	}
+
+	@Override
+	public List<HashMap<String, Object>> queryCountry(HashMap<String, Object> wherMap) {
+		List<HashMap<String,Object>> country = bookMapper.queryCountry(wherMap);
+		return country;
+	}
+
+	@Override
+	public List<HashMap<String, Object>> queryCity(HashMap<String, Object> wherMap) {
+		List<HashMap<String,Object>> city = bookMapper.queryCity(wherMap);
+		return city;
+	}
+
+	@Override
+	public List<HashMap<String, Object>> queryArea(HashMap<String, Object> wherMap) {
+		List<HashMap<String,Object>> area = bookMapper.queryArea(wherMap);
+		return area;
+	}
+
+	@Override
+	public int getNextSeq() {
+		int id = bookMapper.getNextSeq();
+		return id;
+	}
 }

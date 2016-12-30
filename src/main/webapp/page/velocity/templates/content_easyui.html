@@ -1,0 +1,116 @@
+#set($title = '首页')
+<script type="text/javascript">
+function newUser(){
+	$('#dlg').dialog('open').dialog('setTitle','New Book');
+	$('#fm').form('clear');
+	url = 'save';
+}
+function saveUser(){
+	var country = $('#cc1').combobox('getText');
+	var city = $('#cc2').combobox('getText');
+	var area = $('#cc3').combobox('getText');
+	$('#country').val(country);
+	$('#city').val(city);
+	$('#area').val(area);
+
+	$('#fm').form('submit',{
+		url: url,
+		
+		onSubmit: function(param){
+			return $(this).form('validate');
+		},
+		success: function(result){
+			var result = eval('('+result+')');
+			if (result.errorMsg){
+				$.messager.show({
+					title: 'Error',
+					msg: result.errorMsg
+				});
+			} else {
+				$('#dlg').dialog('close');		// close the dialog
+				$('#dg').datagrid('reload');	// reload the user data
+			}
+		}
+	});
+}
+</script>
+
+<table id="dg" title="书单" class="easyui-datagrid"
+	style="width: 550px; height: 250px" url="queryAlls"
+	toolbar="#toolbar" rownumbers="true" fitColumns="true"
+	singleSelect="true">
+	<thead>
+		<th field="AUTHOR">作者</th>
+		<th field="NAME">书名</th>
+		<th field="PRICE">价格</th>
+		<th field="TYPE">类型</th>
+	</thead>
+
+</table>
+
+<div id="toolbar">
+	<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
+	<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">Edit User</a>
+	<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">Remove User</a>
+</div>
+
+<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+		closed="true" buttons="#dlg-buttons">
+	<div class="ftitle">User Information</div>
+	<form id="fm" method="post">
+		<div class="fitem">
+			<label>书名:</label>
+			<input name="NAME" class="easyui-validatebox" required="true">
+		</div>
+		<div class="fitem">
+			<label>作者:</label>
+			<input name="AUTHOR" class="easyui-validatebox" required="true">
+		</div>
+		<div class="fitem">
+			<label>价格:</label>
+			<input name="PRICE" class="easyui-numberbox">
+		</div>
+		<div class="fitem">
+			<label>出版日期:</label>
+			<input name="PUBLISHDATE" type="text" class="easyui-datebox" editable="false"></input>
+		</div>
+		<div class="fitem">
+			<label>类型:</label>
+			<input id="cc" style="width:150px" class="easyui-combobox" editable="false"
+			url="queryType"
+			valueField="TYPE_ID" textField="TYPE_NAME" name="TYPE"></input>
+		</div>
+		<div class="fitem">
+			<label>出版地:</label>
+			<input type="hidden"  value="" name="country" id="country">
+			<input id="cc1" style="width:80px" class="easyui-combobox" name="countryId" editable="false" data-options="
+                valueField: 'COUNTRY_NO',
+                textField: 'COUNTRY_NAME',
+            url: 'queryCountry',
+            onSelect: function(rec){
+                $('#cc2').combobox('clear');  
+                $('#cc3').combobox('clear');  
+                var url = 'queryCity?country_no='+rec.COUNTRY_NO;
+                $('#cc2').combobox('reload', url);
+            }">
+            <input type="hidden" value="" name="city" id="city">
+    <input id="cc2" style="width:80px" class="easyui-combobox" name="cityId" editable="false" data-options="
+            valueField: 'CITY_NO',
+                textField: 'CITY_NAME',
+            onSelect: function(rec){
+            
+                $('#cc3').combobox('clear');
+                var url = 'queryArea?city_no='+rec.CITY_NO;
+                $('#cc3').combobox('reload', url);
+            }">
+            <input type="hidden" value="" name="area" id="area">
+    <input id="cc3" style="width:80px" class="easyui-combobox" name="areaId" editable="false" data-options="
+            valueField:'AREA_NO',
+            textField:'AREA_NAME'">
+		</div>
+	</form>
+</div>
+<div id="dlg-buttons">
+	<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser()">Save</a>
+	<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
+</div>

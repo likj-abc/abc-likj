@@ -2,4 +2,5 @@ eclipse.preferences.version=1
 encoding//src/main/webapp/page/velocity/layout/foot.html=UTF-8
 encoding//src/main/webapp/page/velocity/layout/head.html=UTF-8
 encoding//src/main/webapp/page/velocity/templates/content.html=UTF-8
+encoding//src/main/webapp/page/velocity/templates/content_easyui.html=UTF-8
 encoding//src/main/webapp/page/velocity/templates/views.html=UTF-8

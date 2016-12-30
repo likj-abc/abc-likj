@@ -4,82 +4,83 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Book {
-    private BigDecimal id;
+    private int ID;
 
-    private String name;
+    private String NAME;
 
-    private String author;
+    private String AUTHOR;
 
-    private BigDecimal price;
+    private int PRICE;
 
-    private Date publishdate;
+    private String PUBLISHDATE;
 
-    private BigDecimal type;
+    private String TYPE;
 
-    private String address;
+    private String ADDRESS;
 
-	public BigDecimal getId() {
-		return id;
+	public int getID() {
+		return ID;
 	}
 
-	public void setId(BigDecimal id) {
-		this.id = id;
+	public void setID(int iD) {
+		ID = iD;
 	}
 
-	public String getName() {
-		return name;
+	public String getNAME() {
+		return NAME;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNAME(String nAME) {
+		NAME = nAME;
 	}
 
-	public String getAuthor() {
-		return author;
+	public String getAUTHOR() {
+		return AUTHOR;
 	}
 
-	public void setAuthor(String author) {
-		this.author = author;
+	public void setAUTHOR(String aUTHOR) {
+		AUTHOR = aUTHOR;
 	}
 
-	public BigDecimal getPrice() {
-		return price;
+	public int getPRICE() {
+		return PRICE;
 	}
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
+	public void setPRICE(int pRICE) {
+		PRICE = pRICE;
 	}
 
-	public Date getPublishdate() {
-		return publishdate;
+	public String getPUBLISHDATE() {
+		return PUBLISHDATE;
 	}
 
-	public void setPublishdate(Date publishdate) {
-		this.publishdate = publishdate;
+	public void setPUBLISHDATE(String pUBLISHDATE) {
+		PUBLISHDATE = pUBLISHDATE;
 	}
 
-	public BigDecimal getType() {
-		return type;
+	public String getTYPE() {
+		return TYPE;
 	}
 
-	public void setType(BigDecimal type) {
-		this.type = type;
+	public void setTYPE(String tYPE) {
+		TYPE = tYPE;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getADDRESS() {
+		return ADDRESS;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setADDRESS(String aDDRESS) {
+		ADDRESS = aDDRESS;
 	}
 
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", name=" + name + ", author=" + author + ", price=" + price + ", publishdate="
-				+ publishdate + ", type=" + type + ", address=" + address + "]";
+		return "Book [ID=" + ID + ", NAME=" + NAME + ", AUTHOR=" + AUTHOR + ", PRICE=" + PRICE + ", PUBLISHDATE="
+				+ PUBLISHDATE + ", TYPE=" + TYPE + ", ADDRESS=" + ADDRESS + "]";
 	}
 
-    
-    
+	
+
+	
 }

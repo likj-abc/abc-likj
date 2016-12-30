@@ -24,15 +24,14 @@
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/page/" />
-		<property name="suffix" value=".html" />
+		<property name="suffix" value=".html" /> 
 	</bean>
 
-
-	<!-- 模板信息设置 -->
+	<!-- 模板信息设置 sd-->
 	<bean id="velocityConfigurer"
 		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
 		<property name="configLocation">
-			<value>/WEB-INF/velocity/velocity.properties</value>
+			<value>/WEB-INF/config/velocity.properties</value>
 		</property>
 		<property name="velocityProperties">
 			<props>
@@ -60,7 +59,7 @@
 		<property name="exposeSpringMacroHelpers" value="true" /><!--是否使用spring对宏定义的支持 -->
 		<property name="exposeRequestAttributes" value="true" /><!--是否开放request属性 -->
 		<property name="requestContextAttribute" value="rc" /><!--request属性引用名称 -->
-		<property name="layoutUrl" value="layout/layout.html"></property>
+		<property name="layoutUrl" value="/layout/layout.html"></property>
 	</bean>
 	<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="false">

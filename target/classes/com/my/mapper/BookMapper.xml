@@ -50,25 +50,25 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="ID != null">
-        #{ID,jdbcType=DECIMAL},
+        #{ID},
       </if>
       <if test="NAME != null">
-        #{NAME,jdbcType=VARCHAR},
+        #{NAME},
       </if>
       <if test="AUTHOR != null">
-        #{AUTHOR,jdbcType=VARCHAR},
+        #{AUTHOR},
       </if>
       <if test="PRICE != null">
-        #{PRICE,jdbcType=DECIMAL},
+        #{PRICE},
       </if>
       <if test="PUBLISHDATE != null">
-        #{PUBLISHDATE,jdbcType=TIMESTAMP},
+        to_date(#{PUBLISHDATE},'yyyy-mm-dd'),
       </if>
       <if test="TYPE != null">
-        #{TYPE,jdbcType=DECIMAL},
+        #{TYPE},
       </if>
       <if test="ADDRESS != null">
-        #{ADDRESS,jdbcType=VARCHAR},
+        #{ADDRESS},
       </if>
     </trim>
   </insert>
@@ -107,9 +107,48 @@
     where ID = #{ID,jdbcType=DECIMAL}
   </update>
   <select id="queryAll" resultType="java.util.HashMap" parameterType="java.util.HashMap">
-  	select * from (select t.*,rownum rn from test_book t) where rn>=#{start} and rn &lt;=#{end}
+  	select t.id,t.name,t.author,t.price,t.publishdate,t.address,rownum rn,(select type_name 
+  	from test_booktype where t.type = type_id) type from test_book t order by #{orderbysort}
   </select>
     <select id="queryAll_count" resultType="int" parameterType="java.util.HashMap">
   	select count(*) from (select t.*,rownum rn from test_book t)
+  </select>
+  <select id="queryType" resultType="java.util.HashMap">
+  	select * from test_booktype order by type_id
+  </select>
+  
+  <select id="queryCountry" resultType="java.util.HashMap">
+  	 select * from tab_country where 1=1
+  	 <if test="country_no != null">
+  	 		and country_no = #{country_no}
+  	 	</if>
+  	 order by country_name
+  </select>
+  <select id="queryCity" resultType="java.util.HashMap">
+  	 select * from tab_city where 1=1
+  	 
+  	 	<if test="country_no != null">
+  	 		and country_no = #{country_no}
+  	 	</if>
+  	 	<if test="city_no != null">
+  	 		and city_no = #{city_no}
+  	 	</if>
+  	
+  	 order by city_name
+  </select>
+  <select id="queryArea" resultType="java.util.HashMap">
+  	 select * from tab_area where 1=1
+
+  	 	<if test="city_no != null">
+  	 		and city_no = #{city_no}
+  	 	</if>
+  	 	<if test="area_no != null">
+  	 		and area_no = #{area_no}
+  	 	</if>
+
+  	  order by area_name
+  </select>
+  <select id="getNextSeq" resultType="int">
+  	select test_book_seq.nextval from dual
   </select>
 </mapper>

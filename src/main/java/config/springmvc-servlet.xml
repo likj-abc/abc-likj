@@ -24,11 +24,10 @@
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/page/" />
-		<property name="suffix" value=".html" />
+		<property name="suffix" value=".html" /> 
 	</bean>
 
-
-	<!-- 模板信息设置 -->
+	<!-- 模板信息设置 sd-->
 	<bean id="velocityConfigurer"
 		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
 		<property name="configLocation">

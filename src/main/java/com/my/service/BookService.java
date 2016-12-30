@@ -11,7 +11,7 @@ public interface BookService {
 
     int insert(Book record);
 
-    int insertSelective(Book record);
+    int insertSelective(Book record) throws Exception;
 
     Book selectByPrimaryKey(BigDecimal ID);
 
@@ -22,4 +22,14 @@ public interface BookService {
     List<HashMap<String,Object>> queryAll(HashMap<String,Object>  wherMap);
     
     int queryAll_count(HashMap<String,Object>  wherMap);
+    
+    List<HashMap<String,Object>> queryType(HashMap<String,Object>  wherMap);
+    
+    List<HashMap<String,Object>> queryCountry(HashMap<String,Object>  wherMap);
+    
+    List<HashMap<String,Object>> queryCity(HashMap<String,Object>  wherMap);
+    
+    List<HashMap<String,Object>> queryArea(HashMap<String,Object>  wherMap);
+    
+    int getNextSeq(); 
 }

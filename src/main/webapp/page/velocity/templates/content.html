@@ -1,0 +1,91 @@
+#set($title = '首页')
+<style type="text/css">
+td{
+ width:100px;
+ text-align:center
+}
+</style>
+<table>
+	<tr>
+		<td>作者</td>
+		<td>书名</td>
+		<td>价格</td>
+		<td>出版时间</td>
+		<td>类型</td>
+	</tr>
+#foreach($data in $!{pager.resultMap})
+
+
+	<tr class="item" style="cursor:pointer">
+		<td>$!{data.AUTHOR}</td>
+		<td>$!{data.NAME}</td>
+		<td>$!number.format('0.00',$!{data.PRICE})</td>
+		<td>$!date.format('yyyy-MM-dd',$!{data.PUBLISHDATE})</td>
+		<td>$!{data.TYPE}</td>
+	</tr>
+
+#end
+	<tr>
+		<td>总页数:$!{pager.total_page}</td>
+		<td>第$!{pager.cur_page}页</td>
+		<td>总条数：$!{pager.result_count}</td>
+		<td onclick="window.location.href='queryAll?cur_page=$!{pager.first_page}'">首页</td>
+		#if($!{pager.hasPre})
+		<td onclick="window.location.href='queryAll?cur_page=$!{pager.pre_page}'">上一页</td>
+		#end
+		#foreach($bean in $!{pager.getPages()})
+		  #if($!{pager.cur_page} == $!{bean})
+		  <td onclick="window.location.href='queryAll?cur_page=$!{bean}'" style="color:red">$!{bean}</td>
+		  #else
+		  <td onclick="window.location.href='queryAll?cur_page=$!{bean}'">$!{bean}</td>
+		  #end
+		
+		#end
+		#if($!{pager.hasNext})
+		<td onclick="window.location.href='queryAll?cur_page=$!{pager.next_page}'">下一页</td>
+		#end
+		<td onclick="window.location.href='queryAll?cur_page=$!{pager.last_page}'">末页</td>
+	</tr>
+</table>
+
+<div id="tt" style="width:300px;height:300px;background-color: #cacaca">
+	<table id="usertb" style="width:300px;height:auto">
+	<thead>
+		<tr>
+			<th field="name" width="35px">作者</th>
+			<th field="age" width="35px">书名</th>
+			<th field="country" width="35px">价格</th>
+			<th field="sex" width="35px">类型</th>
+		</tr>
+		</thead>
+	</table>
+</div>
+<script>
+var data = {
+		"rows":[]
+	}
+	$(function(){
+		$('#usertb').datagrid({
+			singleSelect:true
+		});
+		$('.item').draggable({
+			revert:true,
+			proxy:'clone',
+			
+		});
+		$('#tt').droppable({
+			onDrop:function(e,source){
+				var name = $(source).find('td:eq(0)').html();
+				var age = $(source).find('td:eq(1)').html();
+				var country = $(source).find('td:eq(2)').html();
+				var sex = $(source).find('td:eq(4)').html();
+				add(name,age,country,sex);
+			}
+		});
+	});
+	function add(name,age,country,sex){
+
+	data.rows.push({name:name,age:age,country:country,sex:sex});
+	$('#usertb').datagrid('loadData',data);
+	}
+</script>

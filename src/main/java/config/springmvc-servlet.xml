@@ -60,7 +60,7 @@
 		<property name="exposeSpringMacroHelpers" value="true" /><!--是否使用spring对宏定义的支持 -->
 		<property name="exposeRequestAttributes" value="true" /><!--是否开放request属性 -->
 		<property name="requestContextAttribute" value="rc" /><!--request属性引用名称 -->
-		<property name="layoutUrl" value="layout/layout.html"></property>
+		<property name="layoutUrl" value="/layout/layout.html"></property>
 	</bean>
 	<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="false">

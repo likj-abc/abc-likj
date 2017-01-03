@@ -134,7 +134,7 @@ public class BookAction {
 			String country_no = request.getParameter("country");
 			String city_no = request.getParameter("city");
 			String area_no = request.getParameter("area");
-			String id_no = request.getParameter("ID");
+			String id_no = request.getParameter("id") !=null ? request.getParameter("id"):request.getParameter("ID");
 			System.out.println("========================="+id_no);
 			String add = country_no+" "+city_no+" "+area_no;
 			int id = Integer.parseInt(id_no);
@@ -168,6 +168,32 @@ public class BookAction {
 			map.put("errorMsg", e.getMessage());
 		}
 		return map;
+	}
+	@RequestMapping("detail")
+	@ResponseBody
+	public  String detail(HttpServletRequest request,HttpServletResponse response){
+		String index = request.getParameter("index");
+		String str = "<form method='post'>"+
+	"<table class='dv-table' style='width:100%;background:#fafafa;padding:5px;margin-top:5px;'>"+
+		"<tr>"+
+			"<td>NAME</td>"+
+			"<td><input name='NAME' class='easyui-validatebox' required='true'></input></td>"+
+			"<td>AUTHOR</td>"+
+			"<td><input name='AUTHOR' class='easyui-validatebox' required='true'></input></td>"+
+		"</tr>"+
+		"<tr>"+
+			"<td>price</td>"+
+			"<td><input name='PRICE'></input></td>"+
+			"<td>Email</td>"+
+			"<td><input valueField='TYPE' textField='TYPE_NAME' name='TYPE' class='easyui-combobox' editable='false' url='queryType'></input></td>"+
+		"</tr>"+
+	"</table>"+
+	"<div style='padding:5px 0;text-align:right;padding-right:30px'>"+
+		"<a href='#' class='easyui-linkbutton' iconCls='icon-save' plain='true' onclick='saveItem("+index+")'>Save</a>"+
+		"<a href='#' class='easyui-linkbutton' iconCls='icon-cancel' plain='true' onclick='cancelItem("+index+")'>Cancel</a>"+
+	"</div>"+
+"</form>";
+		return str;
 	}
 	
 }

@@ -8,26 +8,74 @@ $(function(){
 		destroyUrl: 'dele',
 		autoSave:true
 	});
+	
+	$('#dg').datagrid({
+		view: detailview,
+		detailFormatter:function(index,row){
+			return '<div class="ddv"></div>';
+		},
+		onExpandRow: function(index,row){
+			var ddv = $(this).datagrid('getRowDetail',index).find('div.ddv');
+			ddv.panel({
+				border:false,
+				cache:true,
+				href:'detail?index='+index,
+				onLoad:function(){
+					$('#dg').datagrid('fixDetailRowHeight',index);
+					$('#dg').datagrid('selectRow',index);
+					$('#dg').datagrid('getRowDetail',index).find('form').form('load',row);
+				}
+			});
+			$('#dg').datagrid('fixDetailRowHeight',index);
+		}
+	});
 });
+
+function saveItem(index){
+	var row = $('#dg').datagrid('getRows')[index];
+	var url = row.isNewRecord ? 'save' : 'update?id='+row.ID;
+	$('#dg').datagrid('getRowDetail',index).find('form').form('submit',{
+		url: url,
+		onSubmit: function(){
+			return $(this).form('validate');
+		},
+		success: function(data){
+			data = eval('('+data+')');
+			data.isNewRecord = false;
+			$('#dg').datagrid('collapseRow',index);
+			$('#dg').datagrid('updateRow',{
+				index: index,
+				row: data
+			});
+		}
+	});
+}
+function cancelItem(index){
+	var row = $('#dg').datagrid('getRows')[index];
+	if (row.isNewRecord){
+		$('#dg').datagrid('deleteRow',index);
+	} else {
+		$('#dg').datagrid('collapseRow',index);
+	}
+}
 </script>
 <body>
 <table id="dg" title="书单" 
-	style="width: 550px; height: 250px" idField="id
-	"  pagination="true" 
+	style="width: 550px; height: 550px" idField="id"  pagination="true" 
 	toolbar="#toolbar" rownumbers="true" fitColumns="true"
 	singleSelect="true">
 	<thead>
-		<th field="AUTHOR" width="50px" editor="{type:'validatebox',options:{required:true}}">作者</th>
-		<th field="NAME" width="50px" editor="{type:'validatebox',options:{required:true}}">书名</th>
-		<th field="PRICE" width="50px" editor="{type:'numberbox',options:{required:true}}">价格</th>
-		<th field="TYPE" width="50px" data-options="formatter:function(value,row){
+		<th field="AUTHOR"  editor="{type:'validatebox',options:{required:true}}">作者</th>
+		<th field="NAME"  editor="{type:'validatebox',options:{required:true}}">书名</th>
+		<th field="PRICE"  editor="{type:'numberbox',options:{required:true}}">价格</th>
+		<th field="TYPE"  data-options="formatter:function(value,row){
                             return row.TYPE_NAME;
                         }" editor="{type:'combobox',options:{valueField:'TYPE',
                                 textField:'TYPE_NAME',
                                 url:'queryType',panelHeight: 'auto',
                                 required:false}
                                }" >类型</th>
-		<th field="PUBLISHDATE" width="50px" editor="datebox">出版日期</th>
+		<th field="PUBLISHDATE"  editor="datebox">出版日期</th>
 	</thead>
 
 </table>

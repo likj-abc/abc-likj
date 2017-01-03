@@ -40,7 +40,7 @@ public class BookAction {
 		int result_count = bookService.queryAll_count(wherMap);
 		Page page = new Page(curPage, result_count, limit, books);
 		
-		ModelAndView mode = new ModelAndView("views");
+		ModelAndView mode = new ModelAndView("views_grid");
 		mode.addObject("pager", page);
 		return mode;
 	}
@@ -51,7 +51,7 @@ public class BookAction {
 		HashMap<String,Object>  wherMap= new HashMap<String,Object>();
 		wherMap.put("orderbysort", " publishdate desc");
 		List<HashMap<String,Object>> books = bookService.queryAll(wherMap);
-		
+		System.out.println("=========================="+books);
 		return books;
 	}
 	
@@ -134,12 +134,12 @@ public class BookAction {
 			String country_no = request.getParameter("country");
 			String city_no = request.getParameter("city");
 			String area_no = request.getParameter("area");
-			String id_no = request.getParameter("id");
+			String id_no = request.getParameter("ID");
+			System.out.println("========================="+id_no);
 			String add = country_no+" "+city_no+" "+area_no;
 			int id = Integer.parseInt(id_no);
 			book.setID(id);
 			book.setADDRESS(add);
-			System.out.println("========================="+book);
 			int id_a = bookService.updateByPrimaryKeySelective(book);
 			System.out.println("========================="+id_a);
 			map.put("success", true);
@@ -169,4 +169,5 @@ public class BookAction {
 		}
 		return map;
 	}
+	
 }

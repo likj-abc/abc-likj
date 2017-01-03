@@ -17,8 +17,14 @@ public class BookServiceImp implements BookService {
 
 	@Autowired
 	BookMapper bookMapper;
-	public int deleteByPrimaryKey(BigDecimal ID) {
-		return 0;
+	public int deleteByPrimaryKey(int ID) throws Exception {
+		try {
+			int a = bookMapper.deleteByPrimaryKey(ID);
+			return a;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("删除信息失败！");
+		}
 	}
 
 	public int insert(Book record) {
@@ -40,8 +46,14 @@ public class BookServiceImp implements BookService {
 		return null;
 	}
 
-	public int updateByPrimaryKeySelective(Book record) {
-		return 0;
+	public int updateByPrimaryKeySelective(Book record) throws Exception {
+		try {
+			int a = bookMapper.updateByPrimaryKeySelective(record);
+			return a;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("更新信息失败！");
+		}
 	}
 
 	public int updateByPrimaryKey(Book record) {

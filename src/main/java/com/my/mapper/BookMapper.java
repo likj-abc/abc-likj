@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface BookMapper {
-    int deleteByPrimaryKey(BigDecimal ID);
+    int deleteByPrimaryKey(int ID);
 
     int insert(Book record);
 

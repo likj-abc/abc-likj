@@ -5,6 +5,33 @@ function newUser(){
 	$('#fm').form('clear');
 	url = 'save';
 }
+function editUser(){
+	var row = $('#dg').datagrid('getSelected');
+	if (row){
+		$('#dlg').dialog('open').dialog('setTitle','Edit User');
+		$('#fm').form('load',row);
+		url = 'update?id='+row.ID;
+	}
+}
+function destroyUser(){
+	var row = $('#dg').datagrid('getSelected');
+	if (row){
+		$.messager.confirm('Confirm','Are you sure you want to destroy this user?',function(r){
+			if (r){
+				$.post('dele',{id:row.ID},function(result){
+					if (result.success){
+						$('#dg').datagrid('reload');	// reload the user data
+					} else {
+						$.messager.show({	// show error message
+							title: 'Error',
+							msg: result.errorMsg
+						});
+					}
+				},'json');
+			}
+		});
+	}
+}
 function saveUser(){
 	var country = $('#cc1').combobox('getText');
 	var city = $('#cc2').combobox('getText');
@@ -21,12 +48,12 @@ function saveUser(){
 		},
 		success: function(result){
 			var result = eval('('+result+')');
-			if (result.errorMsg){
+			if (result.error){
 				$.messager.show({
 					title: 'Error',
 					msg: result.errorMsg
 				});
-			} else {
+			} else if(result.success) {
 				$('#dlg').dialog('close');		// close the dialog
 				$('#dg').datagrid('reload');	// reload the user data
 			}
@@ -43,7 +70,8 @@ function saveUser(){
 		<th field="AUTHOR">作者</th>
 		<th field="NAME">书名</th>
 		<th field="PRICE">价格</th>
-		<th field="TYPE">类型</th>
+		<th field="TYPE_NAME">类型</th>
+		<th field="PUBLISHDATE">出版日期</th>
 	</thead>
 
 </table>
@@ -78,7 +106,7 @@ function saveUser(){
 			<label>类型:</label>
 			<input id="cc" style="width:150px" class="easyui-combobox" editable="false"
 			url="queryType"
-			valueField="TYPE_ID" textField="TYPE_NAME" name="TYPE"></input>
+			valueField="TYPE" textField="TYPE_NAME" name="TYPE"></input>
 		</div>
 		<div class="fitem">
 			<label>出版地:</label>

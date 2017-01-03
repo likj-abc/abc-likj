@@ -100,7 +100,7 @@ public class BookAction {
 	
 	@RequestMapping("save")
 	@ResponseBody
-	public  HashMap<String,Object> queryArea(Book book,HttpServletRequest request,HttpServletResponse response){
+	public  HashMap<String,Object> save(Book book,HttpServletRequest request,HttpServletResponse response){
 		HashMap<String,Object>  wherMap= new HashMap<String,Object>();
 		
 		HashMap<String,Object>  map= new HashMap<String,Object>();
@@ -115,6 +115,52 @@ public class BookAction {
 			System.out.println("========================="+book);
 			int id_a = bookService.insertSelective(book);
 			System.out.println("========================="+id_a);
+			map.put("success", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("error", true);
+			map.put("errorMsg", e.getMessage());
+		}
+		return map;
+	}
+	
+	@RequestMapping("update")
+	@ResponseBody
+	public  HashMap<String,Object> update(Book book,HttpServletRequest request,HttpServletResponse response){
+		HashMap<String,Object>  wherMap= new HashMap<String,Object>();
+		
+		HashMap<String,Object>  map= new HashMap<String,Object>();
+		try {
+			String country_no = request.getParameter("country");
+			String city_no = request.getParameter("city");
+			String area_no = request.getParameter("area");
+			String id_no = request.getParameter("id");
+			String add = country_no+" "+city_no+" "+area_no;
+			int id = Integer.parseInt(id_no);
+			book.setID(id);
+			book.setADDRESS(add);
+			System.out.println("========================="+book);
+			int id_a = bookService.updateByPrimaryKeySelective(book);
+			System.out.println("========================="+id_a);
+			map.put("success", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("error", true);
+			map.put("errorMsg", e.getMessage());
+		}
+		return map;
+	}
+	
+	@RequestMapping("dele")
+	@ResponseBody
+	public  HashMap<String,Object> dele(HttpServletRequest request,HttpServletResponse response){
+		
+		HashMap<String,Object>  map= new HashMap<String,Object>();
+		try {
+			String id_no = request.getParameter("id");
+			int id = Integer.parseInt(id_no);
+			int id_a = bookService.deleteByPrimaryKey(id);
+			System.out.println("========"+id_a);
 			map.put("success", true);
 		} catch (Exception e) {
 			e.printStackTrace();

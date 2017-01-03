@@ -7,7 +7,7 @@ import java.util.List;
 import com.my.bean.Book;
 
 public interface BookService {
-    int deleteByPrimaryKey(BigDecimal ID);
+    int deleteByPrimaryKey(int ID) throws Exception;
 
     int insert(Book record);
 
@@ -15,7 +15,7 @@ public interface BookService {
 
     Book selectByPrimaryKey(BigDecimal ID);
 
-    int updateByPrimaryKeySelective(Book record);
+    int updateByPrimaryKeySelective(Book record) throws Exception;
 
     int updateByPrimaryKey(Book record);
     

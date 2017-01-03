@@ -11,9 +11,9 @@
     from TEST_BOOK
     where ID = #{ID,jdbcType=DECIMAL}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+  <delete id="deleteByPrimaryKey" parameterType="INTEGER">
     delete from TEST_BOOK
-    where ID = #{ID,jdbcType=DECIMAL}
+    where ID = #{ID}
   </delete>
   <insert id="insert" parameterType="com.my.bean.Book">
     insert into TEST_BOOK (ID, NAME, AUTHOR, 
@@ -82,19 +82,19 @@
         AUTHOR = #{AUTHOR,jdbcType=VARCHAR},
       </if>
       <if test="PRICE != null">
-        PRICE = #{PRICE,jdbcType=DECIMAL},
+        PRICE = #{PRICE},
       </if>
       <if test="PUBLISHDATE != null">
-        PUBLISHDATE = #{PUBLISHDATE,jdbcType=TIMESTAMP},
+        PUBLISHDATE = to_date(#{PUBLISHDATE},'yyyy-mm-dd'),
       </if>
-      <if test="TYPE != null">
-        TYPE = #{TYPE,jdbcType=DECIMAL},
+      <if test="TYPE != null and TYPE!=''">
+        TYPE = #{TYPE},
       </if>
       <if test="ADDRESS != null">
         ADDRESS = #{ADDRESS,jdbcType=VARCHAR},
       </if>
     </set>
-    where ID = #{ID,jdbcType=DECIMAL}
+    where ID = #{ID}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.my.bean.Book">
     update TEST_BOOK
@@ -107,14 +107,14 @@
     where ID = #{ID,jdbcType=DECIMAL}
   </update>
   <select id="queryAll" resultType="java.util.HashMap" parameterType="java.util.HashMap">
-  	select t.id,t.name,t.author,t.price,t.publishdate,t.address,rownum rn,(select type_name 
-  	from test_booktype where t.type = type_id) type from test_book t order by #{orderbysort}
+  	select t.id,t.name,t.author,t.price,to_char(t.publishdate,'yyyy-mm-dd') publishdate,t.address,rownum rn,(select type_name 
+  	from test_booktype where t.type = type_id) type_name from test_book t order by #{orderbysort}
   </select>
     <select id="queryAll_count" resultType="int" parameterType="java.util.HashMap">
   	select count(*) from (select t.*,rownum rn from test_book t)
   </select>
   <select id="queryType" resultType="java.util.HashMap">
-  	select * from test_booktype order by type_id
+  	select type_id type,type_name from test_booktype order by type_id
   </select>
   
   <select id="queryCountry" resultType="java.util.HashMap">

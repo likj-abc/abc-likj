@@ -47,12 +47,23 @@ public class BookAction {
 	
 	@RequestMapping("queryAlls")
 	@ResponseBody
-	public  List<HashMap<String,Object>> queryAlls(HttpServletRequest request,HttpServletResponse response){
+	public  HashMap<String, Object> queryAlls(String page,String rows,HttpServletRequest request,HttpServletResponse response){
 		HashMap<String,Object>  wherMap= new HashMap<String,Object>();
+		
+		HashMap<String,Object>  rt= new HashMap<String,Object>();
+		int curPage = Integer.parseInt(page);
+		int limit = Integer.parseInt(rows);
+		int start = (curPage - 1)*limit+1;
+		int end = curPage*limit;
+		wherMap.put("start", start);
+		wherMap.put("end", end);
 		wherMap.put("orderbysort", " publishdate desc");
 		List<HashMap<String,Object>> books = bookService.queryAll(wherMap);
-		System.out.println("=========================="+books);
-		return books;
+		int result_count = bookService.queryAll_count(wherMap);
+		System.out.println("=========================="+rows);
+		rt.put("rows", books);
+		rt.put("total", result_count);
+		return rt;
 	}
 	
 	@RequestMapping("queryType")

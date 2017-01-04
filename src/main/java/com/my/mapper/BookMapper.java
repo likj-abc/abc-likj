@@ -20,6 +20,8 @@ public interface BookMapper {
     
     List<HashMap<String,Object>> queryAll(HashMap<String,Object>  wherMap);
     
+    List<HashMap<String,Object>> queryBooks(HashMap<String,Object>  wherMap);
+    
     int queryAll_count(HashMap<String,Object>  wherMap);
     
     List<HashMap<String,Object>> queryType(HashMap<String,Object>  wherMap);

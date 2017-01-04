@@ -98,4 +98,10 @@ public class BookServiceImp implements BookService {
 		int id = bookMapper.getNextSeq();
 		return id;
 	}
+
+	@Override
+	public List<HashMap<String, Object>> queryBooks(HashMap<String, Object> wherMap) {
+		List<HashMap<String,Object>> books = bookMapper.queryBooks(wherMap);
+		return books;
+	}
 }

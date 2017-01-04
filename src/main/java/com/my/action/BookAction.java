@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.my.bean.Book;
 import com.my.service.BookService;
 import com.my.util.Page;
@@ -30,17 +32,17 @@ public class BookAction {
 		}
 		int curPage = Integer.parseInt(cur_page);
 		int limit = 3;
-		int start = (curPage - 1)*limit+1;
-		int end = curPage*limit;
+//		int start = (curPage - 1)*limit+1;
+//		int end = curPage*limit;
 		HashMap<String,Object>  wherMap= new HashMap<String,Object>();
-		wherMap.put("start", start);
-		wherMap.put("end", end);
+//		wherMap.put("start", start);
+//		wherMap.put("end", end);
 		wherMap.put("orderbysort", " publishdate desc");
-		List<HashMap<String,Object>> books = bookService.queryAll(wherMap);
-		int result_count = bookService.queryAll_count(wherMap);
-		Page page = new Page(curPage, result_count, limit, books);
+		PageHelper.startPage(curPage, limit);
+		List<HashMap<String,Object>> books = bookService.queryBooks(wherMap);
+		PageInfo<HashMap<String, Object>> page = new PageInfo<HashMap<String, Object>>(books);
 		
-		ModelAndView mode = new ModelAndView("views_grid");
+		ModelAndView mode = new ModelAndView("views");
 		mode.addObject("pager", page);
 		return mode;
 	}

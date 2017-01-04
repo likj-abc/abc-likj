@@ -110,6 +110,10 @@
   	select * from (select t.id,t.name,t.author,t.price,to_char(t.publishdate,'yyyy-mm-dd') publishdate,t.address,rownum rn,(select type_name 
   	from test_booktype where t.type = type_id) type_name from test_book t order by #{orderbysort}) where rn&lt;=#{end} and rn >=#{start}
   </select>
+  <select id="queryBooks" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+  	select t.id,t.name,t.author,t.price,to_char(t.publishdate,'yyyy-mm-dd') publishdate,t.address,rownum rn,(select type_name 
+  	from test_booktype where t.type = type_id) type_name from test_book t order by #{orderbysort}
+  </select>
     <select id="queryAll_count" resultType="int" parameterType="java.util.HashMap">
   	select count(*) from (select t.*,rownum rn from test_book t)
   </select>

@@ -93,22 +93,31 @@ td{
     <li><a href="queryAll?cur_page=$!{pager.nextPage}">&raquo;</a></li>
 </ul>
 </div>
-<div id="tt" style="width:300px;height:300px;background-color: #cacaca">
-	<table id="usertb" style="width:300px;height:auto">
+<div id="tt" style="width:auto;height:300px;background-color: #cacaca">
+	<table id="usertb" style="width:auto;height:300px" toolbar="#toolbar">
 	<thead>
 		<tr>
-			<th field="name" width="35px">作者</th>
-			<th field="age" width="35px">书名</th>
-			<th field="country" width="35px">价格</th>
-			<th field="sex" width="35px">类型</th>
+			<th field="name">作者</th>
+			<th field="age">书名</th>
+			<th field="country">价格</th>
+			<th field="sex">类型</th>
+			<th field="count">数量</th>
 		</tr>
 		</thead>
 	</table>
+	<p>总价：￥<span id="pp">0.00</span></p>
+</div>
+<div id="toolbar">
+	<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
+	<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">Edit User</a>
+	<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">Remove User</a>
 </div>
 <script>
 var data = {
-		"rows":[]
-	}
+		"total" : 0,
+		"rows" : []
+	};
+	var tprice = 0;
 	$(function(){
 		$('#usertb').datagrid({
 			singleSelect:true
@@ -124,13 +133,31 @@ var data = {
 				var age = $(source).find('td:eq(1)').html();
 				var country = $(source).find('td:eq(2)').html();
 				var sex = $(source).find('td:eq(4)').html();
-				add(name,age,country,sex);
+				addP(name,age,parseFloat(country),sex);
 			}
 		});
 	});
-	function add(name,age,country,sex){
-
-	data.rows.push({name:name,age:age,country:country,sex:sex});
+	function p(pr){
+		return pr.toFixed(2);
+	}
+	function addP(name,age,country,sex){
+		function add(){
+		for(var i = 0; i < data.total;i++ ){
+			var row = data.rows[i];
+			if(row.age == age){
+				row.count += 1;
+				row.country+=country;
+				return;
+			}
+			
+			}
+		data.total += 1;
+		
+		data.rows.push({name:name,age:age,country:country,sex:sex,count:1});
+		}
+		add();
+		tprice +=country;
 	$('#usertb').datagrid('loadData',data);
+	$('#pp').html(p(tprice));
 	}
 </script>

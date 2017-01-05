@@ -3,6 +3,9 @@ package com.my.service;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +17,25 @@ import com.my.mapper.BookMapper;
 @Service
 @Transactional
 public class BookServiceImp implements BookService {
-
 	@Autowired
 	BookMapper bookMapper;
+	
+	public BookServiceImp() {
+		System.out.println("============================================");
+		p();
+	}
+	public  void p() {  
+        Runnable runnable = new Runnable() {  
+            public void run() {  
+                // task to run goes here  
+                System.out.println("Hello !!");  
+            }  
+        };  
+        ScheduledExecutorService service = Executors  
+                .newSingleThreadScheduledExecutor();  
+        // 第二个参数为首次执行的延时时间，第三个参数为定时执行的间隔时间  
+        service.scheduleAtFixedRate(runnable, 10, 1, TimeUnit.SECONDS);  
+    }
 	public int deleteByPrimaryKey(int ID) throws Exception {
 		try {
 			int a = bookMapper.deleteByPrimaryKey(ID);

@@ -16,7 +16,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.my.bean.Book;
 import com.my.service.BookService;
-import com.my.util.Page;
 
 @Controller
 public class BookAction {

@@ -1,5 +1,5 @@
 #set($title = '首页')
-<script type="text/javascript" src="$!{rc.contextPath}/page/velocity/templates/js/HelloWorld.js"></script>
+
 <style type="text/css">
 td{
  width:100px;
@@ -44,7 +44,7 @@ td{
 #end
 	<tr>
 		<td>总页数:$!{pager.pages}</td>
-		<td>第$!{pager.pageNum}页</td>
+		<td>第$!{pager.pageNum}$!{cur_page}页</td>
 		<td>总条数：$!{pager.total}</td>
 		<td onclick="window.location.href='queryAll?cur_page=1'">首页</td>
 		#if($!{pager.hasPreviousPage})

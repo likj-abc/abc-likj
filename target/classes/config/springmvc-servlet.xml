@@ -51,11 +51,12 @@
 		<!--这是另外一种视图 -->
 		<property name="prefix" value="/templates/" />
 		<property name="suffix" value=".html" />
+		<property name="toolboxConfigLocation" value="/WEB-INF/config/toolbox.xml"/>
 		<!--避免乱码 -->
 		<property name="contentType" value="text/html;charset=UTF-8" />
-
-		<property name="dateToolAttribute" value="date" /><!--日期函数名称 -->
-		<property name="numberToolAttribute" value="number" /><!--数字函数名称 -->
+		
+		<!-- <property name="dateToolAttribute" value="date" />
+		<property name="numberToolAttribute" value="number" /> -->
 		<property name="exposeSpringMacroHelpers" value="true" /><!--是否使用spring对宏定义的支持 -->
 		<property name="exposeRequestAttributes" value="true" /><!--是否开放request属性 -->
 		<property name="requestContextAttribute" value="rc" /><!--request属性引用名称 -->

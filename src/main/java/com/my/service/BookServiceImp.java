@@ -22,13 +22,14 @@ public class BookServiceImp implements BookService {
 	
 	public BookServiceImp() {
 		System.out.println("============================================");
-		p();
+		
 	}
 	public  void p() {  
         Runnable runnable = new Runnable() {  
             public void run() {  
                 // task to run goes here  
                 System.out.println("Hello !!");  
+                
             }  
         };  
         ScheduledExecutorService service = Executors  

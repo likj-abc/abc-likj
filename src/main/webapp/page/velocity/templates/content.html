@@ -1,5 +1,4 @@
 #set($title = '首页')
-
 <style type="text/css">
 td{
  width:100px;
@@ -30,7 +29,7 @@ td{
 		<td>出版时间</td>
 		<td>类型</td>
 	</tr>
-#foreach($data in $!{pager.list})
+#foreach($data in $!{pager.list})<script type="text/javascript">alert("$velocityCount");</script>
 
 
 	<tr class="item" style="cursor:pointer">
@@ -44,7 +43,7 @@ td{
 #end
 	<tr>
 		<td>总页数:$!{pager.pages}</td>
-		<td>第$!{pager.pageNum}$!{cur_page}页</td>
+		<td>第$!{pager.pageNum}页</td>
 		<td>总条数：$!{pager.total}</td>
 		<td onclick="window.location.href='queryAll?cur_page=1'">首页</td>
 		#if($!{pager.hasPreviousPage})
@@ -68,7 +67,7 @@ td{
             <ul>
                 <li><a href="queryAll?cur_page=$!{pager.firstPage}"><i class="icon-fast-backward"></i></a></li>
                 <li class="previous"><a href="queryAll?cur_page=$!{pager.prePage}">Previous</a></li>
-                #foreach($bean in $!{pager.navigatepageNums})
+                #foreach($bean in $!{pager.navigatepageNums}) 
                 	#if($!{pager.pageNum} == $!{bean})
                 	<li class="active"><a href="queryAll?cur_page=$!{bean}">$!{bean}</a></li>
                 	#else
